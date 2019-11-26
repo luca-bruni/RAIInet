@@ -7,6 +7,6 @@ class Firewall: public Ability {
 	public:
 		Firewall();
 		void use(Cell *cell) override;
-}
+};
 
 #endif

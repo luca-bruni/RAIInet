@@ -9,6 +9,6 @@ class Ability {
 		bool isUsed;
 		virtual void use(Cell *cell) = 0;
 		virtual void use(Link *link) = 0;
-}
+};
 
 #endif

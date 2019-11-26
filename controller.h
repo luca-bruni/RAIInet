@@ -8,6 +8,6 @@
 class Controller {
 	public:
 		void loop();
-}
+};
 
 #endif

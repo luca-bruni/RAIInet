@@ -7,6 +7,6 @@ class Polarize: public Ability {
 	public:
 		Polarize();
 		void use(Cell *cell) override;
-}
+};
 
 #endif

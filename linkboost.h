@@ -7,6 +7,6 @@ class LinkBoost: public Ability {
 	public:
 		LinkBoost();
 		void use(Link *link) override;
-}
+};
 
 #endif
