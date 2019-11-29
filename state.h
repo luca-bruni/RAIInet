@@ -1,12 +1,12 @@
 #ifndef STATE_H
 #define STATE_H
 
-enum class StateType {CellChange, Reveal, Download, Ability};
+enum class StateType {Download, Ability, CellChange, Reveal};
 
 struct State {
-	StateType state; // The State of the Player or Link
+	StateType state; // The State of the Player
 	int id; // The ability ID the Player is using
-	int player; // Which player this action is directed at
+	char link; // The link the cell is changing to
 };
 
 #endif

@@ -1,35 +1,19 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include "observer.h"
-#include "subject.h"
-#include "state.h"
-#include "info.h"
-#include "player.h"
-#include "playerinfo.h"
+#include "display.h"
 #include <iostream>
-#include <vector>
-#include <string>
-#include <map>
 
-class TextDisplay: public Observer<Info, State> {
-	const size_t boardSize = 8;
-	const size_t abilitySize = 5;
+class TextDisplay: public Display {
 	std::ostream &out;
-	std::vector<std::vector<char>> board;
-	std::map<char, std::string> links;
-	PlayerInfo *p1;
-	PlayerInfo *p2;
-	int turn;
-	void displayPlayer(int player);
+	protected:
+		void displayPlayer(int player) override;
 	public:
 		void swapTurn(); // TESTING ONLY
-		TextDisplay(std::string link1, std::string link2, std::string ability1,
-				std::string ability2);
+		TextDisplay(std::string l1, std::string l2, std::string a1, std::string a2);
 		~TextDisplay();
-		void notify(Subject<Info, State> &whoNotified) override;
-		void display();
-		void displayAbilities();
+		void display() override;
+		void displayAbilities() override;
 };
 
 #endif
