@@ -4,6 +4,7 @@
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
 #include "board.h"
+#include <iostream>
 
 class Controller {
 	public:

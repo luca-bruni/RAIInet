@@ -13,15 +13,17 @@
 #include <map>
 
 class TextDisplay: public Observer<Info, State> {
-	const int boardSize = 8;
-	const int abilitySize = 5;
+	const size_t boardSize = 8;
+	const size_t abilitySize = 5;
 	std::ostream &out;
 	std::vector<std::vector<char>> board;
 	std::map<char, std::string> links;
-	PlayerInfo p1, p2;
+	PlayerInfo *p1;
+	PlayerInfo *p2;
 	int turn;
 	void displayPlayer(int player);
 	public:
+		void swapTurn(); // TESTING ONLY
 		TextDisplay(std::string link1, std::string link2, std::string ability1,
 				std::string ability2);
 		~TextDisplay();

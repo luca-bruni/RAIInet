@@ -3,10 +3,10 @@
 
 struct Info {
 	int row, col;
-	char type;
-	int strength;
 	int player;
-	bool isBoosted;
+	char link;
+	bool firewall;
+	int playerFirewall;
 };
 
 #endif
