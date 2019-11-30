@@ -6,7 +6,7 @@
 class Firewall: public Ability {
 	public:
 		Firewall();
-		void use(Cell *cell) override;
+		void use(Cell *cell, Player &p) override;
 };
 
 #endif

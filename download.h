@@ -6,7 +6,7 @@
 class Download: public Ability {
 	public:
 		Download();
-		void use(Cell *cell) override;
+		void use(Link *link, Player &p) override;
 };
 
 #endif
