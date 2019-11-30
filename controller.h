@@ -1,10 +1,12 @@
 #ifndef CON_H
 #define CON_H
 
+#include "display.h"
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
 #include "board.h"
 #include <iostream>
+#include <fstream>
 #include <string>
 
 class Controller {

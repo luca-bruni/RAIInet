@@ -58,3 +58,5 @@ void TextDisplay::displayAbilities(){
 		out << endl;
 	}
 }
+
+void TextDisplay::printError(string msg) { out << msg << endl; }

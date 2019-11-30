@@ -11,25 +11,49 @@ Controller::Controller(string l1, string l2, string a1, string a2, bool graphics
 }
 
 void Controller::startGame(){
-	TextDisplay *td = new TextDisplay(l1, l2, a1, a2);
-	td->display();
-	td->displayAbilities();
-	td->swapTurn();
-	td->display();
-	td->displayAbilities();
-	delete td;
-	GraphicsDisplay *gd = new GraphicsDisplay(l1, l2, a1, a2);
-	gd->display();
-	char cmd;
+	istream& in = cin;
+	vector<GDisplay*> displays = vector<GDisplay*>();
+	displays.emplace_back(new TextDisplay(l1, l2, a1, a2));
+	if(graphics) displays.emplace_back(new GraphicsDisplay(l1, l2, a1, a2));
+	
+	for(auto d : displays) d->display();
+
+	string cmd;
 	while(true) {
-		cin >> cmd;
-		if(cmd == 'q') {
+		in >> cmd;
+		if(cmd == "move") {
+			char c;
+			if(!(in >> c)) {
+				static_cast<TextDisplay*>(displays[0])->
+					printError("move needs a character respresentation for a piece to move.");
+			} else {
+				string dir;
+				in >> dir;
+				try {
+					// MOVE PIECE
+				} catch (...) {}
+			}
+		} else if(cmd == "abilities") {
+			for(auto d : displays) d->displayAbilities();
+		} else if(cmd == "ability") {
+			int id;
+			if(!(in >> id)) {
+				static_cast<TextDisplay*>(displays[0])->
+					printError("ability needs an ID for the card to use.");
+			} else {
+				try {
+					// USE ABILITY
+				} catch (...) {}
+			}
+		} else if(cmd == "board") {
+			for(auto d : displays) d->display();
+		} else if(cmd == "sequence") {
+			// SWITCH THE IN STREAM
+			// but can't do that normally since the in stream is a reference
+			// hence its constant...
+		} else if(cmd == "quit") {
 			break;
 		}
-		if(cmd == 's') {
-			gd->swapTurn();
-			gd->display();
-		}
 	}
-	delete gd;
+	for(auto d : displays) delete d;
 }
