@@ -5,7 +5,6 @@
 #include "subject.h"
 #include "state.h"
 #include "info.h"
-#include "player.h"
 #include "playerinfo.h"
 #include <iostream>
 #include <vector>
