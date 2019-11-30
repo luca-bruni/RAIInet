@@ -3,7 +3,8 @@
 
 #include "cell.h"
 #include "link.h"
-#include "player.h"
+
+class Player;
 
 class Ability {
 	public:

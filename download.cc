@@ -1,4 +1,5 @@
 #include "download.h"
+#include "player.h"
   
 Download::Download(): isUsed{false} {}
 

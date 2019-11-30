@@ -1,4 +1,5 @@
 #include "polarize.h"
+#include "player.h"
 
 Polarize::Polarize(): isUsed{false} {}
 

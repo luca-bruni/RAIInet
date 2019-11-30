@@ -1,4 +1,5 @@
 #include "scan.h"
+#include "player.h"
 
 Scan::Scan(): isUsed{false} {}
 

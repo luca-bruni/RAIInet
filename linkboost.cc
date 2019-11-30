@@ -1,4 +1,5 @@
 #include "linkboost.h"
+#include "player.h"
 
 LinkBoost::LinkBoost(): isUsed{false} {}
 
