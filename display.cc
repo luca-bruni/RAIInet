@@ -24,6 +24,9 @@ GDisplay::GDisplay(string l1, string l2, string a1, string a2){
                 pi[1]->abilities.emplace_back(a2[i]);
                 pi[1]->abilityUsed.emplace_back(false);
         }
+	pi[0]->abilityUsed[2] = true;
+	pi[0]->abilityUsed[0] = true;
+	pi[1]->abilityUsed[4] = true;
         board = vector<vector<char>>();
         for(size_t r = 0; r < boardSize; ++r){
                 vector<char> row = vector<char>();

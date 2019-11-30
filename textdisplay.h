@@ -9,7 +9,7 @@ class TextDisplay: public GDisplay {
 	protected:
 		void displayPlayer(int player) override;
 	public:
-		void swapTurn(); // TESTING ONLY
+		void swapTurn();
 		TextDisplay(std::string l1, std::string l2, std::string a1, std::string a2);
 		~TextDisplay();
 		void display() override;

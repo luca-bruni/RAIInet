@@ -18,6 +18,10 @@ void Controller::loop(){
 		if(cmd == 'q') {
 			break;
 		}
+		if(cmd == 's') {
+			gd->swapTurn();
+			gd->display();
+		}
 	}
 	delete gd;
 }
