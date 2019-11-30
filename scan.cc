@@ -2,7 +2,7 @@
 
 Scan::Scan(): isUsed{false} {}
 
-void Scan::use(Link *link) {
+void Scan::use(Link *link, Player &p) {
     link->reveal();
     isUsed = true;
 }

@@ -3,12 +3,13 @@
 
 #include "cell.h"
 #include "link.h"
+#include "player.h"
 
 class Ability {
 	public:
 		bool isUsed;
-		virtual void use(Cell *cell) = 0;
-		virtual void use(Link *link) = 0;
+		virtual void use(Cell *cell, Player &p) = 0;
+		virtual void use(Link *link, Player &p) = 0;
 };
 
 #endif

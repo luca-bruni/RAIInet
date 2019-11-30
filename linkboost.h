@@ -6,7 +6,7 @@
 class LinkBoost: public Ability {
 	public:
 		LinkBoost();
-		void use(Link *link) override;
+		void use(Link *link, Player &p) override;
 };
 
 #endif

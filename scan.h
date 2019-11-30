@@ -6,7 +6,7 @@
 class Scan: public Ability {
 	public:
 		Scan();
-		void use(Link *link) override;
+		void use(Link *link, Player &p) override;
 };
 
 #endif
