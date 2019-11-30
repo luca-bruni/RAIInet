@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Display::Display(string l1, string l2, string a1, string a2){
+GDisplay::GDisplay(string l1, string l2, string a1, string a2){
 	links = map<char, string>();
         pi = vector<PlayerInfo*>();
 	pi.emplace_back(new PlayerInfo());
@@ -48,9 +48,9 @@ Display::Display(string l1, string l2, string a1, string a2){
 
 }
 
-Display::~Display() { for(auto p : pi) delete p; }
+GDisplay::~GDisplay() { for(auto p : pi) delete p; }
 
-void Display::notify(Subject<Info, State> &whoNotified){
+void GDisplay::notify(Subject<Info, State> &whoNotified){
 	const State& state = whoNotified.getState();
         int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;

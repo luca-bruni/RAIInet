@@ -1,3 +1,6 @@
+#ifndef DISPLAY_H
+#define DISPLAY_H
+
 #include "observer.h"
 #include "subject.h"
 #include "playerinfo.h"
@@ -6,7 +9,7 @@
 #include <vector>
 #include <map>
 
-class Display: public Observer<Info, State> {
+class GDisplay: public Observer<Info, State> {
 	const int boardSize = 8;
 	const int handSize = 5;
 	protected:
@@ -16,9 +19,11 @@ class Display: public Observer<Info, State> {
 		int turn;
 		virtual void displayPlayer(int player) = 0;
 	public:
-		Display(std::string l1, std::string l2, std::string a1, std::string a2);
-		~Display();
+		GDisplay(std::string l1, std::string l2, std::string a1, std::string a2);
+		~GDisplay();
 		void notify(Subject<Info, State> &whoNotified);
 		virtual void display() = 0;
 		virtual void displayAbilities() = 0;
 };
+
+#endif

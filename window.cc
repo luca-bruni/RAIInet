@@ -34,10 +34,11 @@ Xwindow::Xwindow(int width, int height) {
 	XColor xcolour;
 	Colormap cmap;
 
-	const size_t numColours = 5;
+	const size_t numColours = 9;
 	char color_vals[numColours][10] = {
 		"white", "black", "red", 
-		"green", "blue"
+		"green", "blue", "sienna",
+		"beige", "dim gray", "gold"
 	};
 
 	cmap = DefaultColormap(d, DefaultScreen(d));

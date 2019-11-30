@@ -4,7 +4,7 @@
 #include "display.h"
 #include <iostream>
 
-class TextDisplay: public Display {
+class TextDisplay: public GDisplay {
 	std::ostream &out;
 	protected:
 		void displayPlayer(int player) override;

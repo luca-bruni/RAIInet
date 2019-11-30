@@ -4,7 +4,7 @@ using namespace std;
 
 void TextDisplay::swapTurn() {turn = (turn ? 0 : 1);}
 
-TextDisplay::TextDisplay(string l1, string l2, string a1, string a2): Display{l1,l2,a1,a2},
+TextDisplay::TextDisplay(string l1, string l2, string a1, string a2): GDisplay{l1,l2,a1,a2},
 								      out{cout}{}
 
 TextDisplay::~TextDisplay(){}
