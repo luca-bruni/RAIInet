@@ -6,7 +6,7 @@
 class Scan: public Ability {
 	public:
 		Scan();
-		void use(Cell *cell) override;
+		void use(Link *link) override;
 };
 
 #endif
