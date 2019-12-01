@@ -19,8 +19,9 @@ class Player : public Subject<PInfo, PState> {
     int dataDownloaded = 0;
     int virusDownloaded = 0;
     std::vector<Ability*> abilities;
+    int id;
 public:
-    Player(std::string abs);
+    Player(std::string abs, int id);
     ~Player();
     void useAbility(int choice, Cell *cell);
     void useAbility(int choice, Link *link);
