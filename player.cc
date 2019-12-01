@@ -50,7 +50,7 @@ void Player::addData() {
     dataDownloaded++;
 }
 
-PInfo Player::getInfo() {
+PInfo Player::getInfo() const {
     PInfo i{this->id, ' '};
     return i;    
 }
