@@ -2,18 +2,18 @@
 
 using namespace std;
 
-Cell::Cell(int row, int col): row{row}, col{col}, link{nullptr}, isFW{false} {
+Cell::Cell(int row, int col): link{nullptr}, row{row}, col{col}, owner{0}, isFW{false} {}
 
+void Cell::setLink(shared_ptr<Link> link) {
+	this->link = link;
+	this->notifyObservers();
 }
 
-Cell::~Cell() {
-
+shared_ptr<Link> Cell::getLink() {
+	 return this->link;
 }
 
-void Cell::notifyObservers() {
-
-}
-
-void Cell::setLink(Link* l) {
-
+CInfo getInfo() {
+	Info i{0, this->row, this->col, this->isFW, this->owner, ' ', false};
+	return i;
 }
