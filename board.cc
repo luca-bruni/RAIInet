@@ -6,8 +6,8 @@ Board::Board() {}
 
 void Board::init(string l1, string l2, string a1, string a2){
 	players = vector<unique_ptr<Player>>();
-	players.emplace_back(make_unique<Player>(a1));
-	players.emplace_back(make_unique<Player>(a2));
+	players.emplace_back(make_unique<Player>(a1, 0));
+	players.emplace_back(make_unique<Player>(a2, 1));
 	board = vector<vector<Cell>>();
 	for(int r = 0; r < boardSize; ++r){
 		vector<Cell> row = vector<Cell>();

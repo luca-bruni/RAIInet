@@ -17,9 +17,9 @@ class Cell: public Subject<CInfo, CState> {
 
 	public:
 		Cell(int row, int col); // Constructs a Cell object when Board is initialized
-		void notifyObservers(); // Notifies observers the state in which Cell is
 		void setLink(std::shared_ptr<Link> link); // Sets piece on board and notifies
 	       					          // observers
+		void setFirewall(int player);
 		std::shared_ptr<Link> getLink(); // Returns Link in Cell
 		CInfo getInfo(); // Retrieves all necessary info about the Cell
 };
