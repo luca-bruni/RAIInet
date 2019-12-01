@@ -1,8 +1,8 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include "board.h"
 #include "subject.h"
+#include "observer.h"
 #include "state.h"
 #include "info.h"
 #include "link.h"
