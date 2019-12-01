@@ -40,11 +40,11 @@ void Board::init(string l1, string l2, string a1, string a2){
 	}
 }
 
-void Board::setObserver(Observer<Info, State> *ob){
-	for(int i = 0; i < players.size(); ++i) players[i]->attach(ob);
-	for(auto it : links) it.second->attach(ob);
+void Board::setDisplay(GDisplay *d){
+	for(int i = 0; i < players.size(); ++i) players[i]->attach(d);
+	for(auto it : links) it.second->attach(d);
 	for(auto row : board)
-		for(auto cell : row) cell.attach(ob);
+		for(auto cell : row) cell.attach(d);
 }
 
 bool Board::hasWon(){
