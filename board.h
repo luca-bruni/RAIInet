@@ -3,9 +3,7 @@
 
 #include "cell.h"
 #include "player.h"
-#include "info.h"
-#include "state.h"
-#include "observer.h"
+#include "display.h"
 #include "link.h"
 #include <vector>
 #include <map>
@@ -22,7 +20,7 @@ class Board {
 	public:
 		Board();
 		void init(std::string l1, std::string l2, std::string a1, std::string a2);
-		void setObserver(Observer<Info, State> *ob);
+		void setDisplay(GDisplay *d);
 		bool hasWon();
 		int whoWon();
 		void move(char link, std::string dir);

@@ -9,8 +9,8 @@
 #include <vector>
 #include <map>
 
-class GDisplay: public Observer<PInfo, PState>, Observer<CInfo, CState>, 
-						Observer<LInfo, LState>{
+class GDisplay: public Observer<PInfo, PState>, public Observer<CInfo, CState>, 
+						public Observer<LInfo, LState>{
 	const int boardSize = 8;
 	const int handSize = 5;
 	protected:

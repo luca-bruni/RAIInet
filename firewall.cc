@@ -4,6 +4,6 @@
 Firewall::Firewall(): isUsed{false} {}
 
 void Firewall::use(Cell *cell, Player &p) {
-    cell->setIsFW(true);
+    cell->setFirewall(p.getInfo().player);
     isUsed = true;
 }

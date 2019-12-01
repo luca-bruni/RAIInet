@@ -1,8 +1,8 @@
 #include "player.h"
 using namespace std;
 
-Player::Player(string abs): abilities{vector<Ability*>()} {
-    for (size_t i = 0; i < abs.size(); ++i) {
+Player::Player(string abs, int id): abilities{vector<Ability*>()}, id{id} {
+    for (size_t i = 0; i < abs.length(); ++i) {
         if (abs[i] == 'L') abilities.emplace_back(new LinkBoost());
         else if (abs[i] == 'F') abilities.emplace_back(new Firewall());
         else if (abs[i] == 'D') abilities.emplace_back(new Download());
@@ -48,4 +48,9 @@ void Player::addVirus() {
 
 void Player::addData() {
     dataDownloaded++;
+}
+
+PInfo Player::getInfo() const {
+    PInfo i{this->id, ' '};
+    return i;    
 }
