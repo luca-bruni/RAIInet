@@ -37,7 +37,8 @@ void Subject<InfoType, StateType>::attach(Observer<InfoType, StateType> *o) {
 
 template <typename InfoType, typename StateType>
 void Subject<InfoType, StateType>::notifyObservers() {
-  for (auto &ob : observers) ob->notify(*this);
+  if(!observers.empty())
+  	for (auto &ob : observers) ob->notify(*this);
 }
 
 template <typename InfoType, typename StateType>

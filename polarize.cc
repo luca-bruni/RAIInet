@@ -1,9 +1,9 @@
 #include "polarize.h"
 #include "player.h"
 
-Polarize::Polarize(): isUsed{false} {}
+Polarize::Polarize(): Ability{} {}
 
 void Polarize::use(Link *link, Player &p) {
-    link->toggleType();
-    isUsed = true;
+	link->setType((link->getType() == 'V' ? 'D' : 'V'));
+    	isUsed = true;
 }

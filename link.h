@@ -17,7 +17,9 @@ class Link : public Subject<LInfo, LState> {
 		LInfo getInfo() const override; // Retrieves all field data of Link
 		void reveal(); // Notifies observers that piece is revealed to players
 		char getType(); // Returns the type field of the Link
+		void setType(char type);
 		int getStrength(); // Returns the strength field of the Link
+		void setBoosted(bool boosted);
 };
 
 #endif

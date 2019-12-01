@@ -16,7 +16,7 @@ class Controller {
 	std::string l1, l2;
 	std::string a1, a2;
 	bool graphics;
-	std::vector<std::unique_ptr<GDisplay>> displays;
+	std::vector<GDisplay*> displays;
 	Board board;
 	public:
 		Controller(std::string l1, std::string l2, std::string a1, 

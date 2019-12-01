@@ -1,7 +1,7 @@
 #include "scan.h"
 #include "player.h"
 
-Scan::Scan(): isUsed{false} {}
+Scan::Scan(): Ability{} {}
 
 void Scan::use(Link *link, Player &p) {
     link->reveal();
