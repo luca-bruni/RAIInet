@@ -18,7 +18,7 @@
 class Player : public Subject<PInfo, PState> {
     int dataDownloaded = 0;
     int virusDownloaded = 0;
-    std::vector<Ability*> abilities;
+    std::vector<std::unique_ptr<Ability>> abilities;
     int id;
 public:
     Player(std::string abs, int id);

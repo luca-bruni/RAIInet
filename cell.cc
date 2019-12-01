@@ -21,7 +21,7 @@ void Cell::setFirewall(int player) {
 	this->notifyObservers();
 }
 
-CInfo getInfo() const {
+CInfo Cell::getInfo() const {
 	CInfo info{this->row, this->col, '.', this->isFW, this->owner};
 	if (!(this->link)) { info.link = this->link->getInfo().link; }
 	return info;
