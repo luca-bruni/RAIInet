@@ -21,7 +21,7 @@ class Cell: public Subject<CInfo, CState> {
 	       					          // observers
 		void setFirewall(int player);
 		std::shared_ptr<Link> getLink(); // Returns Link in Cell
-		CInfo getInfo(); // Retrieves all necessary info about the Cell
+		CInfo getInfo() const override; // Retrieves all necessary info about the Cell
 };
 
 #endif
