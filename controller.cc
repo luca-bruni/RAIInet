@@ -12,11 +12,11 @@ Controller::Controller(string l1, string l2, string a1, string a2, bool graphics
 
 void Controller::startGame(){
 	istream& in = cin;
-	vector<GDisplay*> displays = vector<GDisplay*>();
-	displays.emplace_back(new TextDisplay(l1, l2, a1, a2));
-	if(graphics) displays.emplace_back(new GraphicsDisplay(l1, l2, a1, a2));
+	vector<unique_ptr<GDisplay>> displays = vector<unique_ptr<GDisplay>>();
+	displays.emplace_back(make_unique<TextDisplay>(l1, l2, a1, a2));
+	if(graphics) displays.emplace_back(make_unique<GraphicsDisplay>(l1, l2, a1, a2));
 	
-	for(auto d : displays) d->display();
+	for(int i = 0; i < displays.size(); ++i) displays[i]->display();
 
 	string cmd;
 	while(true) {
@@ -24,8 +24,7 @@ void Controller::startGame(){
 		if(cmd == "move") {
 			char c;
 			if(!(in >> c)) {
-				static_cast<TextDisplay*>(displays[0])->
-					printError("move needs a character respresentation for a piece to move.");
+				displays[0]->printError("move needs a character respresentation for a piece to move.");
 			} else {
 				string dir;
 				in >> dir;
@@ -34,19 +33,19 @@ void Controller::startGame(){
 				} catch (...) {}
 			}
 		} else if(cmd == "abilities") {
-			for(auto d : displays) d->displayAbilities();
+			for(int i = 0; i < displays.size(); ++i)
+				displays[i]->displayAbilities();
 		} else if(cmd == "ability") {
 			int id;
 			if(!(in >> id)) {
-				static_cast<TextDisplay*>(displays[0])->
-					printError("ability needs an ID for the card to use.");
+				displays[0]->printError("ability needs an ID for the card to use.");
 			} else {
 				try {
 					// USE ABILITY
 				} catch (...) {}
 			}
 		} else if(cmd == "board") {
-			for(auto d : displays) d->display();
+			for(int i = 0; i < displays.size(); ++i) displays[0]->display();
 		} else if(cmd == "sequence") {
 			// SWITCH THE IN STREAM
 			// but can't do that normally since the in stream is a reference
@@ -55,5 +54,4 @@ void Controller::startGame(){
 			break;
 		}
 	}
-	for(auto d : displays) delete d;
 }

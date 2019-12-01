@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Cell::Cell() {
+Cell::Cell(int row, int col): row{row}, col{col}, link{nullptr}, isFW{false} {
 
 }
 

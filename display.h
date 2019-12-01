@@ -21,9 +21,10 @@ class GDisplay: public Observer<Info, State> {
 	public:
 		GDisplay(std::string l1, std::string l2, std::string a1, std::string a2);
 		~GDisplay();
-		void notify(Subject<Info, State> &whoNotified);
+		void notify(Subject<Info, State> &whoNotified); 
 		virtual void display() = 0;
 		virtual void displayAbilities() = 0;
+		virtual void printError(std::string msg) = 0;
 };
 
 #endif

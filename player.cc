@@ -1,7 +1,7 @@
 #include "player.h"
 using namespace std;
 
-Player::Player(vector<char> &abs): abilities{vector<Ability*>()} {
+Player::Player(string abs): abilities{vector<Ability*>()} {
     for (size_t i = 0; i < abs.size(); ++i) {
         if (abs[i] == 'L') abilities.emplace_back(new LinkBoost());
         else if (abs[i] == 'F') abilities.emplace_back(new Firewall());

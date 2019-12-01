@@ -25,6 +25,7 @@ class GraphicsDisplay: public GDisplay {
 		~GraphicsDisplay();
 		void display() override;
 		void displayAbilities() override;
+		void printError(std::string msg) override;
 };
 
 #endif

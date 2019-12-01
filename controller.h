@@ -4,10 +4,11 @@
 #include "display.h"
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
-#include "board.h"
+//#include "board.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <memory>
 
 class Controller {
 	const std::string initLinks = "V1V2V3V4D1D2D3D4";
