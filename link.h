@@ -13,7 +13,7 @@ class Link : public Subject<LInfo, LState> {
 	bool isBoosted;
 	public:
 		Link(char name, char type, int strength, int player);
-		Info getInfo() const override;
+		LInfo getInfo() const override;
 		void reveal();
 		int getType();
 		int getStrength();

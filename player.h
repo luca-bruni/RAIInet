@@ -29,6 +29,6 @@ public:
     int getData();
     void addVirus();
     void addData();
-    Info getInfo() const override;
+    PInfo getInfo() const override;
 };
 #endif
