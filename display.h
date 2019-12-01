@@ -9,7 +9,8 @@
 #include <vector>
 #include <map>
 
-class GDisplay: public Observer<Info, State> {
+class GDisplay: public Observer<PInfo, PState>, Observer<CInfo, CState>, 
+						Observer<LInfo, LState>{
 	const int boardSize = 8;
 	const int handSize = 5;
 	protected:
@@ -21,7 +22,9 @@ class GDisplay: public Observer<Info, State> {
 	public:
 		GDisplay(std::string l1, std::string l2, std::string a1, std::string a2);
 		~GDisplay();
-		void notify(Subject<Info, State> &whoNotified); 
+		void notify(Subject<PInfo, PState> &whoNotified);
+		void notify(Subject<CInfo, CState> &whoNotified);
+		void notify(Subject<LInfo, LState> &whoNotified);
 		virtual void display() = 0;
 		virtual void displayAbilities() = 0;
 		virtual void printError(std::string msg) = 0;

@@ -5,7 +5,7 @@
 #include "info.h"
 #include "state.h"
 
-class Link : public Subject<Info, State> {
+class Link : public Subject<LInfo, LState> {
 	char name;
 	char type;
 	int strength;

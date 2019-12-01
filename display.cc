@@ -48,27 +48,13 @@ GDisplay::GDisplay(string l1, string l2, string a1, string a2){
                         board[boardSize - 1][i] = p2;
                 }
         }
-
 }
 
 GDisplay::~GDisplay() { for(auto p : pi) delete p; }
 
-void GDisplay::notify(Subject<Info, State> &whoNotified){
-	const State& state = whoNotified.getState();
-        int r = whoNotified.getInfo().row;
-        int c = whoNotified.getInfo().col;
-        if (state.state == StateType::CellChange) {
-                board[r][c] = whoNotified.getInfo().link;
-                if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
-                        if(whoNotified.getInfo().playerFirewall) board[r][c] = 'w';
-                        else board[r][c] = 'm';
-                }
-                turn = (turn ? 0 : 1);
-        } else if(state.state == StateType::Reveal){
-		for(auto p : pi){
-			p->revealed.emplace_back(whoNotified.getInfo().link);
-		}
-        } else if(state.state == StateType::Download){
+void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
+	const PState& state = whoNotified.getState();
+        if(state.state == StateType::Download){
                 if(whoNotified.getInfo().player == 0){
                         if(links[whoNotified.getInfo().link][0] == 'D') ++pi[0]->data;
                         else ++pi[0]->virus;
@@ -80,5 +66,20 @@ void GDisplay::notify(Subject<Info, State> &whoNotified){
                 if(turn == 0) pi[0]->abilityUsed[state.id] = true;
                 else pi[1]->abilityUsed[state.id] = true;
         }
+}
+
+void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
+	int r = whoNotified.getInfo().row;
+        int c = whoNotified.getInfo().col;
+        board[r][c] = whoNotified.getInfo().link;
+        if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
+        	if(whoNotified.getInfo().playerFirewall) board[r][c] = 'w';
+                else board[r][c] = 'm';
+        }
+	turn = !turn;
+}
+
+void GDisplay::notify(Subject<LInfo, LState> &whoNotified){
+	for(auto p : pi) p->revealed.emplace_back(whoNotified.getInfo().link);
 }
 

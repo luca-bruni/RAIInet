@@ -15,7 +15,7 @@
 #include "info.h"
 #include "state.h"
 
-class Player : public Subject<Info, State> {
+class Player : public Subject<PInfo, PState> {
     int dataDownloaded = 0;
     int virusDownloaded = 0;
     std::vector<Ability*> abilities;

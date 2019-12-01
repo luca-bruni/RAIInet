@@ -3,10 +3,19 @@
 
 enum class StateType {Download, Ability, CellChange, Reveal};
 
-struct State {
-	StateType state; // The State of the Player
-	int id; // The ability ID the Player is using
-	char link; // The link the cell is changing to
+struct PState {
+	StateType state;
+i	int id;
+};
+
+struct CState {
+	StateType state;
+	char link;
+};
+
+struct LState {
+	StateType state;
+	char link;
 };
 
 #endif
