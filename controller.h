@@ -4,7 +4,7 @@
 #include "display.h"
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
-//#include "board.h"
+#include "board.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -16,10 +16,13 @@ class Controller {
 	std::string l1, l2;
 	std::string a1, a2;
 	bool graphics;
+	std::vector<std::unique_ptr<GDisplay>> displays;
+	Board board;
 	public:
 		Controller(std::string l1, std::string l2, std::string a1, 
 					   std::string a2, bool graphics=false);
 		void startGame();
+		void loop(std::istream &in);
 };
 
 #endif
