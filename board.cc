@@ -122,13 +122,31 @@ void Board::move(char link, string dir){
 }
 
 void Board::battle(Cell &origin, Cell &dest){
+	bool oEnraged = false; // True if origin's Link is enraged; false otherwise
+	bool dEnraged = false; // True if dest's Link is enraged; false otherwise
 	origin.getLink()->reveal(); // Reveal origin link to all
 	dest.getLink()->reveal(); // Reveal dest link to all
-	if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){ // If mover's link-strength greater-equal than other link:
-		players[turn]->download(dest.getLink()); // Mover downloads the lesser Link
-		dest.setLink(origin.getLink()); // Stronger Link remains at dest's location
-	} else { // If mover's link-strength is less than other link:
-		players[!turn]->download(origin.getLink()); // Other player downloads the link
+
+	if (origin.getLink()->getInfo().isEnraged) { oEnraged = true; } // If origin Link is enraged
+	if (dest.getLink()->getInfo().isEnraged) { dEnraged = true; } // If dest Link is enraged
+	
+	if (((oEnraged) && (dEnraged)) || (!((oEnraged) || (dEnraged)))) { // If both or neither Links are enraged
+		if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){ // If mover's link-strength greater-equal than other link:
+			players[turn]->download(dest.getLink()); // Mover downloads the lesser Link
+			dest.setLink(origin.getLink()); // Stronger Link remains at dest's location
+		} else { // If mover's link-strength is less than other link:
+			players[!turn]->download(origin.getLink()); // Other player downloads the Link
+		}
+	}
+	else { // If one Link is enraged
+		if (oEnraged) { // If origin Link is enraged
+			players[turn]->download(dest.getLink());
+			dest.setLink(origin.getLink());
+			origin.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+		} else { // If dest Link is enraged
+			players[!turn]->download(origin.getLink()); // Other player downloads the Link
+			dest.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+		}
 	}
 	origin.setLink(nullptr); // One Link remains
 }
@@ -139,4 +157,8 @@ void Board::useAbility(int id, char link){
 
 void Board::useAbility(int id, int row, int col){
 	players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+}
+
+void Board::useAbility(int id) {
+	players[turn]->useAbility(id); // Calls useAbility on self
 }

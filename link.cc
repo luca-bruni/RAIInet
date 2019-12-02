@@ -20,7 +20,7 @@ char Link::getType() {
 	return this->type;
 }
 
-void Link::setType(char type){
+void Link::setType(char type) {
 	this->type = type;
 }
 
@@ -28,6 +28,14 @@ int Link::getStrength() {
 	return this->strength;
 }
 
-void Link::setBoosted(bool boosted){
+void Link::setBoosted(bool boosted) {
 	this->isBoosted = boosted;
+}
+
+void Link::setEnraged(bool enraged) {
+	this->isEnraged = enraged;
+}
+
+void Link::addStrength() {
+	this->strength++;
 }

@@ -29,6 +29,7 @@ class Board {
 		void battle(Cell &origin, Cell &dest); // Commences a RAIInet battle
 		void useAbility(int id, char link); // Ability on a Link
 		void useAbility(int id, int row, int col); // Ability on a Cell
+		void useAbility(int id); // Ability on self
 };
 
 #endif

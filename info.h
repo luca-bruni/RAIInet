@@ -17,6 +17,7 @@ struct LInfo {
 	int player;
 	char link;
 	bool isBoosted;
+	bool isEnraged;
 };
 
 #endif
