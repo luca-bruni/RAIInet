@@ -18,17 +18,23 @@ void Player::useAbility(int choice, Cell *cell) {
     if (!abilities[choice-1]->isUsed) {
         abilities[choice-1]->use(cell, *this);
     }
+    this->setState(PState{StateType::Ability, choice - 1, '.'});
+    this->notifyObservers();
 }
 
 void Player::useAbility(int choice, Link *link) {
     if (!abilities[choice-1]->isUsed) {
         abilities[choice-1]->use(link, *this);
     }
+    this->setState(PState{StateType::Ability, choice - 1, link->getType()});
+    this->notifyObservers();
 }
 
 void Player::download(shared_ptr<Link> link) {
     if (link->getType() == 'V') virusDownloaded++;
     else dataDownloaded++;
+    this->setState(PState{StateType::Download, 0, link->getType()});
+    this->notifyObservers();
 }
 
 int Player::getVirus() { 
@@ -48,6 +54,5 @@ void Player::addData() {
 }
 
 PInfo Player::getInfo() const {
-    PInfo i{this->id, ' '};
-    return i;    
+    return PInfo {this->id};   
 }

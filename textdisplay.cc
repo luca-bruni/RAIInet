@@ -32,6 +32,7 @@ void TextDisplay::displayPlayer(int player) {
 }
 
 void TextDisplay::display(){
+	out << "Player turn " << turn << endl;
 	displayPlayer(0);
 	out << "========" << endl;
 	for(size_t r = 0; r < board.size(); ++r){

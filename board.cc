@@ -1,5 +1,4 @@
 #include "board.h"
-#include <iostream>
 
 using namespace std;
 
@@ -43,6 +42,7 @@ void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &
                         board[7][i].setLink(links[p2]);
          	}
 	}
+	turn = 0;
 }
 
 void Board::setDisplay(GDisplay *d){
@@ -72,25 +72,25 @@ int Board::whoWon(){
 }
 
 void Board::move(char link, string dir){
+	if(links[link]->getInfo().player != turn) throw "Not your piece.";
 	int row = -1;
 	int col = -1;
 	for(size_t r = 0; r < board.size(); ++r){
 		for(size_t c = 0; c < board[r].size(); ++c){
 			if(!board[r][c].getLink()) continue; 
-			cout << board[r][c].getLink()->getInfo().link << endl;
 			if (board[r][c].getLink()->getInfo().link == link) {
 				row = r;
 				col = c;
 			}
 		}
 	}
-	Cell &origin = board[row][col];
+	Cell &origin = board.at(row).at(col);
 	if(dir == "up") row -= 1;
 	else if(dir == "down") row += 1;
 	else if(dir == "left") col -= 1;
 	else col += 1;
 	try {
-		Cell &dest = board[row][col];
+		Cell &dest = board.at(row).at(col);
 		if(dest.getLink() != nullptr){
 			if(dest.getLink()->getInfo().player == turn){
 				throw "Incorrect move.";
@@ -105,15 +105,17 @@ void Board::move(char link, string dir){
 			origin.setLink(nullptr);
 		}
 		turn = !turn;
-	} catch (out_of_range e) {
+	} catch (...) {
                 if(dir == "down" && turn == 0){
                         players[0]->download(origin.getLink());
                         origin.setLink(nullptr);
+			turn = !turn;
                 } else if(dir == "up" && turn == 1){
                         players[1]->download(origin.getLink());
                         origin.setLink(nullptr);
+			turn = !turn;
                 } else {
-                        throw e;
+                        throw;
                 }
         }
 

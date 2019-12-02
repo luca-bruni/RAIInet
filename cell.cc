@@ -30,7 +30,7 @@ void Cell::setFirewall(int player) {
 
 CInfo Cell::getInfo() const {
 	CInfo info{this->row, this->col, '.', this->isFW, this->owner};
-	if (!(this->link)) { info.link = this->link->getInfo().link; } // If Link is
+	if (this->link) { info.link = this->link->getInfo().link; } // If Link is
 			      // not nullptr, set link in CInfo to the Link's name
 	return info;
 }
