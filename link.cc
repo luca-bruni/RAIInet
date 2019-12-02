@@ -6,7 +6,7 @@ Link::Link(char name, char type, int strength, int player): name{name}, type{typ
 			strength{strength}, player{player}, isBoosted{false} {}
 
 LInfo Link::getInfo() const {
-	LInfo info{this->player, this->name, this->isBoosted};
+	return LInfo {this->player, this->name, this->isBoosted};
 }
 
 void Link::reveal() {

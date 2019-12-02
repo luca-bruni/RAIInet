@@ -17,8 +17,7 @@ void Controller::startGame(){
 
 	for(int i = 0; i < displays.size(); ++i) displays[i]->display();
 
-	board.init(l1, l2, a1, a2);
-	for(auto d : displays) board.setDisplay(d);
+	board.init(l1, l2, a1, a2, displays);
 	loop(cin);
 }
 
@@ -34,13 +33,13 @@ void Controller::loop(istream &in){
                                 in >> dir;
                                 try {
                                         board.move(c, dir);
+					for(auto d : displays) d->display();
                                 } catch (...) {
                                         displays[0]->printError("Invalid move.");
                                 }
                         }
                 } else if(cmd == "abilities") {
-                        for(int i = 0; i < displays.size(); ++i)
-                                displays[i]->displayAbilities();
+                        for(auto d : displays) d->displayAbilities();
                 } else if(cmd == "ability") {
                         int id;
                         if(!(in >> id)) {
@@ -58,7 +57,7 @@ void Controller::loop(istream &in){
                                 }
                         }
                 } else if(cmd == "board") {
-                        for(int i = 0; i < displays.size(); ++i) displays[0]->display();
+                        for(auto d : displays) d->display();
                 } else if(cmd == "sequence") {
 			string file;
 			in >> file;

@@ -1,4 +1,5 @@
 #include "display.h"
+#include <iostream>
 
 using namespace std;
 
@@ -35,24 +36,12 @@ GDisplay::GDisplay(string l1, string l2, string a1, string a2){
                 }
                 board.emplace_back(row);
         }
-        for(size_t i = 0; i < boardSize; ++i){
-                char p1 = 'a' + i;
-                char p2 = 'A' + i;
-                if(i == boardSize / 2 - 1 || i == boardSize / 2) {
-                        board[0][i] = 'S';
-                        board[boardSize - 1][i] = 'S';
-                        board[1][i] = p1;
-                        board[boardSize - 2][i] = p2;
-                } else {
-                        board[0][i] = p1;
-                        board[boardSize - 1][i] = p2;
-                }
-        }
 }
 
 GDisplay::~GDisplay() { for(auto p : pi) delete p; }
 
 void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
+	cout << "Received in Player!" << endl;
 	const PState& state = whoNotified.getState();
         if(state.state == StateType::Download){
                 if(whoNotified.getInfo().player == 0){
@@ -69,17 +58,20 @@ void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
 }
 
 void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
+	cout << "Received in Cell!" << endl;
 	int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;
-        board[r][c] = whoNotified.getInfo().link;
-        if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
+	char old = board[r][c];
+        board[r][c] = whoNotified.getState().link;
+	if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
         	if(whoNotified.getInfo().playerFirewall) board[r][c] = 'w';
                 else board[r][c] = 'm';
         }
-	turn = !turn;
+	if(old != board[r][c] && board[r][c] != 'm' && board[r][c] != 'w') turn = !turn;
 }
 
 void GDisplay::notify(Subject<LInfo, LState> &whoNotified){
+	cout << "Received in Link!" << endl;
 	for(auto p : pi) p->revealed.emplace_back(whoNotified.getInfo().link);
 }
 
