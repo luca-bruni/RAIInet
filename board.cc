@@ -45,11 +45,11 @@ void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &
 	turn = 0;
 }
 
-void Board::setDisplay(GDisplay *d){
+void Board::setDisplay(GDisplay *d) {
 	for(size_t i = 0; i < players.size(); ++i) players[i]->attach(d); // Attaches Players to display observer
 	for(auto it : links) it.second->attach(d); // Attaches value (link) to display observer
-	for(int r = 0; r < board.size(); ++r){ // Rows of Board
-		for(int c = 0; c < board.size(); ++c) { // Cols of Board
+	for(size_t r = 0; r < board.size(); ++r){ // Rows of Board
+		for(size_t c = 0; c < board.size(); ++c) { // Cols of Board
 			board[r][c].attach(d); // Attaches to display observer
 		}
 	}
@@ -105,7 +105,7 @@ void Board::move(char link, string dir){
 			origin.setLink(nullptr); // Sets the link of origin to nullptr
 		}
 		turn = !turn; // Flips turn since move was successful
-	} catch (...) {
+	} catch (out_of_range e) {
                 if(dir == "down" && turn == 0){ // If out_of_range at bottom and Player 1's turn
                         players[0]->download(origin.getLink()); // Player 1 downloads that Link
                         origin.setLink(nullptr); // Set that link to nullptr
