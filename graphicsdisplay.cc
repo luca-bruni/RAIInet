@@ -97,6 +97,7 @@ void GraphicsDisplay::drawPiece(int x, int y, char name){
 }
 
 void GraphicsDisplay::display(){
+	win->fillRectangle(0, 0, 500, 800, Xwindow::White);
 	displayPlayer(0);
 	int iY = boardY + offset;
 	int iX = offset;

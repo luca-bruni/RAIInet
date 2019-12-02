@@ -48,8 +48,8 @@ void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &
 void Board::setDisplay(GDisplay *d){
 	for(size_t i = 0; i < players.size(); ++i) players[i]->attach(d);
 	for(auto it : links) it.second->attach(d);
-	for(int r = 0; r < board.size(); ++r){
-		for(int c = 0; c < board.size(); ++c) {
+	for(size_t r = 0; r < board.size(); ++r){
+		for(size_t c = 0; c < board.size(); ++c) {
 			board[r][c].attach(d);
 		}
 	}
@@ -105,7 +105,7 @@ void Board::move(char link, string dir){
 			origin.setLink(nullptr);
 		}
 		turn = !turn;
-	} catch (...) {
+	} catch (out_of_range e) {
                 if(dir == "down" && turn == 0){
                         players[0]->download(origin.getLink());
                         origin.setLink(nullptr);
