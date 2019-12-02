@@ -19,7 +19,8 @@ class Board {
 	int turn;
 	public:
 		Board();
-		void init(std::string l1, std::string l2, std::string a1, std::string a2);
+		void init(std::string l1, std::string l2, std::string a1, std::string a2,
+				std::vector<GDisplay*> &displays);
 		void setDisplay(GDisplay *d);
 		bool hasWon();
 		int whoWon();

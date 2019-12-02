@@ -1,10 +1,11 @@
 #include "board.h"
+#include <iostream>
 
 using namespace std;
 
 Board::Board() {}
 
-void Board::init(string l1, string l2, string a1, string a2){
+void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &displays){
 	players = vector<unique_ptr<Player>>();
 	players.emplace_back(make_unique<Player>(a1, 0));
 	players.emplace_back(make_unique<Player>(a2, 1));
@@ -23,32 +24,39 @@ void Board::init(string l1, string l2, string a1, string a2){
 		shared_ptr<Link> link2(new Link(p2, l2[i * 2], l2[i * 2 + 1] - '0', 1));
 		links[p1] = link1;
 		links[p2] = link2;
-		
-		if(i == boardSize / 2 - 1 || i == boardSize / 2){
-			board[1][i].setLink(link1);
-			board[6][i].setLink(link2);
-		} else {
-			board[0][i].setLink(link1);
-			board[7][i].setLink(link2);
+		if(i < 4) {
+			shared_ptr<Link> s = make_shared<Link>('S', 'S', 0, i / 2);
+                	links['W' + i] = s;
 		}
 	}
-	
-	for(int i = 0; i < 4; ++i){
-		shared_ptr<Link> s = make_shared<Link>('S', 'S', 0, i / 2);
-		links['W' + i] = s;
-		board[(boardSize / 2 - 1) + i % 2][(boardSize - 1) * i].setLink(s);
+	for(auto d : displays) setDisplay(d);
+	for(int i = 0; i < boardSize; ++i){
+		char p1 = 'a' + i;
+		char p2 = 'A' + i;
+		if(i == boardSize / 2 - 1 || i == boardSize / 2){
+			board[0][i].setLink(links['W' + i - (boardSize / 2 - 1)]);
+			board[7][i].setLink(links['Y' + i - (boardSize / 2 - 1)]);
+                        board[1][i].setLink(links[p1]);
+                        board[6][i].setLink(links[p2]);
+                } else {
+                        board[0][i].setLink(links[p1]);
+                        board[7][i].setLink(links[p2]);
+         	}
 	}
 }
 
 void Board::setDisplay(GDisplay *d){
-	for(int i = 0; i < players.size(); ++i) players[i]->attach(d);
+	for(size_t i = 0; i < players.size(); ++i) players[i]->attach(d);
 	for(auto it : links) it.second->attach(d);
-	for(auto row : board)
-		for(auto cell : row) cell.attach(d);
+	for(int r = 0; r < board.size(); ++r){
+		for(int c = 0; c < board.size(); ++c) {
+			board[r][c].attach(d);
+		}
+	}
 }
 
 bool Board::hasWon(){
-	for(int i = 0; i < players.size(); ++i){
+	for(size_t i = 0; i < players.size(); ++i){
 		if(players[i]->getData() >= 4) return true;
 		if(players[i]->getVirus() >= 4) return true;
 	}
@@ -56,7 +64,7 @@ bool Board::hasWon(){
 }
 
 int Board::whoWon(){
-	for(int i = 0; i < players.size(); ++i){
+	for(size_t i = 0; i < players.size(); ++i){
 		if(players[i]->getData() >= 4) return i;
 		if(players[i]->getVirus() >= 4) return !i;
 	}
@@ -66,12 +74,16 @@ int Board::whoWon(){
 void Board::move(char link, string dir){
 	int row = -1;
 	int col = -1;
-	for(int r = 0; r < board.size(); ++r)
-		for(int c = 0; c < board[r].size(); ++c)
-			if(board[r][c].getLink()->getInfo().link == link) {
+	for(size_t r = 0; r < board.size(); ++r){
+		for(size_t c = 0; c < board[r].size(); ++c){
+			if(!board[r][c].getLink()) continue; 
+			cout << board[r][c].getLink()->getInfo().link << endl;
+			if (board[r][c].getLink()->getInfo().link == link) {
 				row = r;
 				col = c;
 			}
+		}
+	}
 	Cell &origin = board[row][col];
 	if(dir == "up") row -= 1;
 	else if(dir == "down") row += 1;

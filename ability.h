@@ -9,6 +9,7 @@ class Player;
 class Ability {
 	public:
 		bool isUsed;
+		Ability(): isUsed{false} {}
 		virtual void use(Cell *cell, Player &p) = 0;
 		virtual void use(Link *link, Player &p) = 0;
 };

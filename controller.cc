@@ -11,13 +11,13 @@ Controller::Controller(string l1, string l2, string a1, string a2, bool graphics
 }
 
 void Controller::startGame(){
-	displays = vector<unique_ptr<GDisplay>>();
-	displays.emplace_back(make_unique<TextDisplay>(l1, l2, a1, a2));
-	if(graphics) displays.emplace_back(make_unique<GraphicsDisplay>(l1, l2, a1, a2));
+	displays = vector<GDisplay*>();
+	displays.emplace_back(new TextDisplay(l1, l2, a1, a2));
+	if(graphics) displays.emplace_back(new GraphicsDisplay(l1, l2, a1, a2));
 
 	for(int i = 0; i < displays.size(); ++i) displays[i]->display();
 
-	board.init(l1, l2, a1, a2);
+	board.init(l1, l2, a1, a2, displays);
 	loop(cin);
 }
 
@@ -33,13 +33,13 @@ void Controller::loop(istream &in){
                                 in >> dir;
                                 try {
                                         board.move(c, dir);
+					for(auto d : displays) d->display();
                                 } catch (...) {
                                         displays[0]->printError("Invalid move.");
                                 }
                         }
                 } else if(cmd == "abilities") {
-                        for(int i = 0; i < displays.size(); ++i)
-                                displays[i]->displayAbilities();
+                        for(auto d : displays) d->displayAbilities();
                 } else if(cmd == "ability") {
                         int id;
                         if(!(in >> id)) {
@@ -57,7 +57,7 @@ void Controller::loop(istream &in){
                                 }
                         }
                 } else if(cmd == "board") {
-                        for(int i = 0; i < displays.size(); ++i) displays[0]->display();
+                        for(auto d : displays) d->display();
                 } else if(cmd == "sequence") {
 			string file;
 			in >> file;

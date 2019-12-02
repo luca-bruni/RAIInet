@@ -1,4 +1,5 @@
 #include "cell.h"
+#include <iostream>
 
 using namespace std;
 
@@ -7,7 +8,11 @@ Cell::Cell(int row, int col): link{nullptr}, row{row}, col{col}, owner{0}, isFW{
 void Cell::setLink(shared_ptr<Link> link) {
 	this->link = link; // Mutates this' link to the passed in link
 	// Updates CState to CellChange, with new Link's name
-	this->setState(CState{StateType::CellChange, this->link->getInfo().link});
+	if(!link.get()) this->setState(CState{StateType::CellChange, '.'});
+	else {
+		this->setState(CState{StateType::CellChange, this->link->getInfo().link});
+		cout << this->link->getInfo().link << endl;
+	}
 	this->notifyObservers(); // Notifies observers of the change to Cell
 }
 
