@@ -3,7 +3,6 @@
 
 struct PInfo {
 	int player;
-	char link;
 };
 
 struct CInfo {

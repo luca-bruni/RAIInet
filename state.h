@@ -6,6 +6,7 @@ enum class StateType {Download, Ability, CellChange, Reveal};
 struct PState {
 	StateType state;
 	int id;
+	char link;
 };
 
 struct CState {
