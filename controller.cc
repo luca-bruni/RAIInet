@@ -33,8 +33,8 @@ void Controller::loop(istream &in){
                                 try {
                                         board.move(c, dir);
 					for(auto d : displays) d->display();
-                                } catch (...) {
-                                        displays[0]->printError("Invalid move.");
+                                } catch (string s) {
+                                        displays[0]->printError(s);
                                 }
                         }
                 } else if(cmd == "abilities") {
