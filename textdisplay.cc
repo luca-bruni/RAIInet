@@ -54,6 +54,9 @@ void TextDisplay::displayAbilities(){
 		else if(p->abilities[i] == 'D') out << "Download";
 		else if(p->abilities[i] == 'P') out << "Polarize";
 		else if(p->abilities[i] == 'S') out << "Scan";
+		else if(p->abilities[i] == 'E') out << "Enrage";
+		else if(p->abilities[i] == 'R') out << "Remove";
+		else if(p->abilities[i] == 'B') out << "Buff";
 		
 		if(p->abilityUsed[i]) out << " - USED";
 		out << endl;

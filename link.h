@@ -12,6 +12,7 @@ class Link : public Subject<LInfo, LState> {
 	int strength; // Strength of the Link (from 1-4)
 	int player; // Owner of the Link; who placed the Link
 	bool isBoosted; // True if LinkBoost ability used on this Link, false otherwise
+	bool isEnraged; // True is Enrage ability used on this Link, false otherwise
 
 	public:
 		Link(char name, char type, int strength, int player); // Link constructor
@@ -21,6 +22,8 @@ class Link : public Subject<LInfo, LState> {
 		void setType(char type); // Mutates this->type to type
 		int getStrength(); // Returns the strength field of the Link
 		void setBoosted(bool boosted); // Sets isBoosted to true
+		void setEnraged(bool enraged); // Sets isEnraged to true
+		void addStrength(); // Adds 1 to strength
 };
 
 #endif

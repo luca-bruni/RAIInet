@@ -50,6 +50,10 @@ void Player::addVirus() {
     virusDownloaded++;
 }
 
+void Player::removeVirus() {
+    virusDownloaded--;
+}
+
 void Player::addData() {
     dataDownloaded++;
 }

@@ -72,71 +72,93 @@ int Board::whoWon(){
 }
 
 void Board::move(char link, string dir){
-	if(links[link]->getInfo().player != turn) throw "Not your piece.";
+	if(links[link]->getInfo().player != turn) throw "Not your piece."; // If in-permissable move on turn
 	int row = -1;
 	int col = -1;
-	for(size_t r = 0; r < board.size(); ++r){
-		for(size_t c = 0; c < board[r].size(); ++c){
-			if(!board[r][c].getLink()) continue; 
-			if (board[r][c].getLink()->getInfo().link == link) {
-				row = r;
-				col = c;
+	for(size_t r = 0; r < board.size(); ++r){ // Loops through rows
+		for(size_t c = 0; c < board[r].size(); ++c){ // Loops throw cols
+			if(!board[r][c].getLink()) continue; // Re-iterates
+			if (board[r][c].getLink()->getInfo().link == link) { // If Link found
+				row = r; // Sets row to current row
+				col = c; // Sets col to current column
 			}
 		}
 	}
-	Cell &origin = board.at(row).at(col);
-	if(dir == "up") row -= 1;
-	else if(dir == "down") row += 1;
-	else if(dir == "left") col -= 1;
-	else col += 1;
+	Cell &origin = board.at(row).at(col); // Original position of piece via Cell
+	if(dir == "up") row -= 1; // Move up
+	else if(dir == "down") row += 1; // Move down
+	else if(dir == "left") col -= 1; // Move left
+	else col += 1; // Move right
 	try {
 		Cell &dest = board.at(row).at(col);
-		if(dest.getLink() != nullptr){
-			if(dest.getLink()->getInfo().player == turn){
-				throw "Incorrect move.";
-			} else if(dest.getLink()->getType() == 'S'){
-				players[!turn]->download(origin.getLink());
-				origin.setLink(nullptr);
-			} else {
-				battle(origin, dest);
+		if(dest.getLink() != nullptr){ // If dest non-empty
+			if(dest.getLink()->getInfo().player == turn){ // If piece on space owned by mover
+				throw "Cannot move on your own piece.";
+			} else if(dest.getLink()->getType() == 'S'){ // If dest is a server port
+				players[!turn]->download(origin.getLink()); // Download on that port
+				origin.setLink(nullptr); // Since move successful, origin is nullptr now
+			} else { // Must be on enemy player
+				battle(origin, dest); // Commence a battle
 			}
-		} else {
-			dest.setLink(origin.getLink());
-			origin.setLink(nullptr);
+		} else { // If dest is empty
+			dest.setLink(origin.getLink()); // Sets dest's link to that of origin
+			origin.setLink(nullptr); // Sets the link of origin to nullptr
 		}
-		turn = !turn;
+		turn = !turn; // Flips turn since move was successful
 	} catch (out_of_range e) {
-                if(dir == "down" && turn == 0){
-                        players[0]->download(origin.getLink());
-                        origin.setLink(nullptr);
-			turn = !turn;
-                } else if(dir == "up" && turn == 1){
-                        players[1]->download(origin.getLink());
-                        origin.setLink(nullptr);
-			turn = !turn;
+                if(dir == "down" && turn == 0){ // If out_of_range at bottom and Player 1's turn
+                        players[0]->download(origin.getLink()); // Player 1 downloads that Link
+                        origin.setLink(nullptr); // Set that link to nullptr
+			turn = !turn; // Flips turn
+                } else if(dir == "up" && turn == 1){ // If out_of_range at top and Player 2's turn
+                        players[1]->download(origin.getLink()); // Player 2 downloads that Link
+                        origin.setLink(nullptr); // Sets that link to nullptr
+			turn = !turn; // Flips turn
                 } else {
-                        throw;
+                        throw; // No out_of_range is happening; genuine out of boundaries
                 }
         }
 
 }
 
 void Board::battle(Cell &origin, Cell &dest){
-	origin.getLink()->reveal();
-	dest.getLink()->reveal();
-	if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){
-		players[turn]->download(dest.getLink());
-		dest.setLink(origin.getLink());
-	} else {
-		players[!turn]->download(origin.getLink());
+	bool oEnraged = false; // True if origin's Link is enraged; false otherwise
+	bool dEnraged = false; // True if dest's Link is enraged; false otherwise
+	origin.getLink()->reveal(); // Reveal origin link to all
+	dest.getLink()->reveal(); // Reveal dest link to all
+
+	if (origin.getLink()->getInfo().isEnraged) { oEnraged = true; } // If origin Link is enraged
+	if (dest.getLink()->getInfo().isEnraged) { dEnraged = true; } // If dest Link is enraged
+	
+	if (((oEnraged) && (dEnraged)) || (!((oEnraged) || (dEnraged)))) { // If both or neither Links are enraged
+		if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){ // If mover's link-strength greater-equal than other link:
+			players[turn]->download(dest.getLink()); // Mover downloads the lesser Link
+			dest.setLink(origin.getLink()); // Stronger Link remains at dest's location
+		} else { // If mover's link-strength is less than other link:
+			players[!turn]->download(origin.getLink()); // Other player downloads the Link
+		}
 	}
-	origin.setLink(nullptr);
+	else { // If one Link is enraged
+		if (oEnraged) { // If origin Link is enraged
+			players[turn]->download(dest.getLink());
+			dest.setLink(origin.getLink());
+			origin.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+		} else { // If dest Link is enraged
+			players[!turn]->download(origin.getLink()); // Other player downloads the Link
+			dest.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+		}
+	}
+	origin.setLink(nullptr); // One Link remains
 }
 
 void Board::useAbility(int id, char link){
-	players[turn]->useAbility(id, links[link].get());
+	players[turn]->useAbility(id, links[link].get()); // Calls useAbility on a Link
 }
 
 void Board::useAbility(int id, int row, int col){
-	players[turn]->useAbility(id, &board.at(row).at(col));
+	players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+}
+
+void Board::useAbility(int id) {
+	players[turn]->useAbility(id); // Calls useAbility on self
 }
