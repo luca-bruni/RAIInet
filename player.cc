@@ -1,14 +1,15 @@
 #include "player.h"
+#include <iostream>
 
 using namespace std;
 
 Player::Player(string abs, int id): abilities{vector<unique_ptr<Ability>>()}, id{id} {
     for (size_t i = 0; i < abs.length(); ++i) {
         if (abs[i] == 'L') abilities.emplace_back(unique_ptr<LinkBoost>());
-        else if (abs[i] == 'F') abilities.emplace_back(unique_ptr<Firewall>());
-        else if (abs[i] == 'D') abilities.emplace_back(unique_ptr<Download>());
-        else if (abs[i] == 'P') abilities.emplace_back(unique_ptr<Polarize>());
-        else if (abs[i] == 'S') abilities.emplace_back(unique_ptr<Scan>());
+        else if (abs[i] == 'F') abilities.emplace_back(make_unique<Firewall>());
+        else if (abs[i] == 'D') abilities.emplace_back(make_unique<Download>());
+        else if (abs[i] == 'P') abilities.emplace_back(make_unique<Polarize>());
+        else if (abs[i] == 'S') abilities.emplace_back(make_unique<Scan>());
     }
 }
 
