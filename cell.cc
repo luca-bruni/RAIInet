@@ -11,7 +11,6 @@ void Cell::setLink(shared_ptr<Link> link) {
 	if(!link.get()) this->setState(CState{StateType::CellChange, '.'});
 	else {
 		this->setState(CState{StateType::CellChange, this->link->getInfo().link});
-		cout << this->link->getInfo().link << endl;
 	}
 	this->notifyObservers(); // Notifies observers of the change to Cell
 }
