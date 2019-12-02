@@ -6,12 +6,13 @@ Link::Link(char name, char type, int strength, int player): name{name}, type{typ
 			strength{strength}, player{player}, isBoosted{false} {}
 
 LInfo Link::getInfo() const {
-	LInfo info{this->player, this->name, this->isBoosted};
+	LInfo info{this->player, this->name, this->isBoosted}; // Return relevant LInfo
 }
 
 void Link::reveal() {
-	this->setState(LState{StateType::Reveal, this->name});
-	this->notifyObservers();	
+	this->setState(LState{StateType::Reveal, this->name}); // Sets LState to Reveal
+				// with the name of the link to be revealed
+	this->notifyObservers(); // Notifies observers of this change to Link
 }
 
 char Link::getType() {
