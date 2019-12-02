@@ -15,9 +15,8 @@ void Controller::startGame(){
 	displays.emplace_back(new TextDisplay(l1, l2, a1, a2));
 	if(graphics) displays.emplace_back(new GraphicsDisplay(l1, l2, a1, a2));
 
-	for(int i = 0; i < displays.size(); ++i) displays[i]->display();
-
 	board.init(l1, l2, a1, a2, displays);
+	for(int i = 0; i < displays.size(); ++i) displays[i]->display();
 	loop(cin);
 }
 
