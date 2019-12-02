@@ -45,10 +45,10 @@ void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
 	const PState& state = whoNotified.getState();
         if(state.state == StateType::Download){
                 if(whoNotified.getInfo().player == 0){
-                        if(links[whoNotified.getInfo().link][0] == 'D') ++pi[0]->data;
+                        if(links[whoNotified.getState().linkType][0] == 'D') ++pi[0]->data;
                         else ++pi[0]->virus;
                 } else {
-                        if(links[whoNotified.getInfo().link][0] == 'V') ++pi[1]->data;
+                        if(links[whoNotified.getState().linkType][0] == 'V') ++pi[1]->data;
                         else ++pi[1]->virus;
                 }
         } else if(state.state == StateType::Ability){
@@ -61,13 +61,14 @@ void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
 	cout << "Received in Cell!" << endl;
 	int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;
-	char old = board[r][c];
         board[r][c] = whoNotified.getState().link;
 	if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
         	if(whoNotified.getInfo().playerFirewall) board[r][c] = 'w';
                 else board[r][c] = 'm';
         }
-	if(old != board[r][c] && board[r][c] != 'm' && board[r][c] != 'w') turn = !turn;
+	if(whoNotified.getState().state == StateType::CellChange && board[r][c] != '.') {
+		turn = !turn;
+	}
 }
 
 void GDisplay::notify(Subject<LInfo, LState> &whoNotified){

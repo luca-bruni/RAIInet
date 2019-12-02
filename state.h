@@ -1,12 +1,12 @@
 #ifndef STATE_H
 #define STATE_H
 
-enum class StateType {Download, Ability, CellChange, Reveal};
+enum class StateType {Download, Ability, CellChange, Reveal, Firewall};
 
 struct PState {
 	StateType state;
 	int id;
-	char link;
+	char linkType;
 };
 
 struct CState {
