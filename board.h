@@ -11,23 +11,24 @@
 #include <memory>
 
 class Board {
-	const int boardSize = 8;
-	const int handSize = 5;
-	std::vector<std::vector<Cell>> board;
-	std::vector<std::unique_ptr<Player>> players;
-	std::map<char, std::shared_ptr<Link>> links;
-	int turn;
+	const int boardSize = 8; // Default size of the board; length and width
+	const int handSize = 5; // Default size of a Player's hand
+	std::vector<std::vector<Cell>> board; // 2-D array of Cell 
+	std::vector<std::unique_ptr<Player>> players; // Array of Players
+	std::map<char, std::shared_ptr<Link>> links; // Existing Link keys
+	int turn; // Determines which Player is moving now
 	public:
-		Board();
+		Board(); // Constructs a Board
+		// Initializes board to game-start
 		void init(std::string l1, std::string l2, std::string a1, std::string a2,
 				std::vector<GDisplay*> &displays);
-		void setDisplay(GDisplay *d);
-		bool hasWon();
-		int whoWon();
-		void move(char link, std::string dir);
-		void battle(Cell &origin, Cell &dest);
-		void useAbility(int id, char link);
-		void useAbility(int id, int row, int col);
+		void setDisplay(GDisplay *d); // Allows displays to observe all necessary Subjects
+		bool hasWon(); // Checks state of Board for a winning state
+		int whoWon(); // Identifies which Player won
+		void move(char link, std::string dir); // To move an existing piece
+		void battle(Cell &origin, Cell &dest); // Commences a RAIInet battle
+		void useAbility(int id, char link); // Ability on a Link
+		void useAbility(int id, int row, int col); // Ability on a Cell
 };
 
 #endif

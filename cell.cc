@@ -22,7 +22,7 @@ shared_ptr<Link> Cell::getLink() {
 void Cell::setFirewall(int player) {
 	this->owner = player; // Sets owner of the Cell to the player placing Firewall
 			      // The owner field is only used to determine who placed
-	this->setState(CState{StateType::CellChange, 'F'}); // Updates CState to
+	this->setState(CState{StateType::Firewall, 'F'}); // Updates CState to
 			      // CellChange, with the F char for Firewall
 	isFW = true; // Sets isFW to true since a Firewall now exists on the Cell
 	this->notifyObservers(); // Notifies observers of the change to Cell
