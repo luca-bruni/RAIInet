@@ -9,6 +9,9 @@ Player::Player(string abs, int id): abilities{vector<unique_ptr<Ability>>()}, id
         else if (abs[i] == 'D') abilities.emplace_back(unique_ptr<Download>());
         else if (abs[i] == 'P') abilities.emplace_back(unique_ptr<Polarize>());
         else if (abs[i] == 'S') abilities.emplace_back(unique_ptr<Scan>());
+        else if (abs[i] == 'E') abilities.emplace_back(unique_ptr<Enrage>());
+        else if (abs[i] == 'R') abilities.emplace_back(unique_ptr<Remove>());
+        else if (abs[i] == 'B') abilities.emplace_back(unique_ptr<Buff>());
     }
 }
 
