@@ -36,7 +36,9 @@ void TextDisplay::display(){
 	for(size_t r = 0; r < board.size(); ++r){
 		for(size_t c = 0; c < board[r].size(); ++c){
 			try {
-				if(firewalls.at(make_pair(r, c))){
+				if(board[r][c] != '.'){
+					out << board[r][c];
+				} else if(firewalls.at(make_pair(r, c))){
 					out << 'm';
 				} else {
 					out << 'w';

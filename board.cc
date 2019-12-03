@@ -98,7 +98,15 @@ void Board::move(char link, string dir){
 	else throw "Not a valid direction to move in.";
 	try {
 		Cell &dest = board.at(row).at(col);
-		if(dest.getLink() != nullptr){ // If dest non-empty
+		if(dest.getInfo().isFirewall && dest.getInfo().playerFirewall != turn){
+			links[link]->reveal();
+			dest.setLink(origin.getLink());
+			origin.setLink(nullptr);
+			if(links[link]->getType() == 'V') {
+				players[turn]->download(links[link]);
+				dest.setLink(nullptr);
+			}
+		} else if(dest.getLink() != nullptr){ // If dest non-empty
 			if(dest.getLink()->getInfo().player == turn){ // If piece on space owned by mover
 				throw "Cannot move on your own piece.";
 			} else if(dest.getLink()->getType() == 'S'){ // If dest is a server port
