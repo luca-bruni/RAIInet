@@ -111,6 +111,17 @@ void GraphicsDisplay::display(){
 				win->fillRectangle(iX + c * cellSize, iY + r * cellSize,
 						cellSize, cellSize, Xwindow::White);
 			}
+			try {
+				if(firewalls.at(make_pair(r, c))){
+					win->fillRectangle(iX + c * cellSize,
+							iY + r * cellSize, cellSize,
+							cellSize, Xwindow::Blue);
+				} else {
+					win->fillRectangle(iX + c * cellSize,
+							iY + r * cellSize, cellSize,
+							cellSize, Xwindow::Red);
+				}
+			} catch (out_of_range e) {}
 			drawPiece(iX + c * cellSize + (cellSize - pieceSize) / 2,
 				  iY + r * cellSize + (cellSize - pieceSize) / 2,
 				  board[r][c]);

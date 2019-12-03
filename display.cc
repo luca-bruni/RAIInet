@@ -5,6 +5,7 @@ using namespace std;
 
 GDisplay::GDisplay(string l1, string l2, string a1, string a2){
 	links = map<char, string>();
+	firewalls = map<pair<int, int>, int>();
         pi = vector<unique_ptr<PlayerInfo>>();
 	pi.emplace_back(make_unique<PlayerInfo>());
 	pi.emplace_back(make_unique<PlayerInfo>());
@@ -56,13 +57,15 @@ void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
 void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
 	int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;
-        board[r][c] = whoNotified.getState().link;
-	if(whoNotified.getInfo().link == '.' && whoNotified.getInfo().isFirewall){
-        	if(whoNotified.getInfo().playerFirewall) board[r][c] = 'w';
-                else board[r][c] = 'm';
+	if(whoNotified.getState().state == StateType::Firewall){
+        	firewalls[std::make_pair(r, c)] = whoNotified.getInfo().playerFirewall;
+		display();
         }
-	if(whoNotified.getState().state == StateType::CellChange && board[r][c] != '.') {
-		turn = !turn;
+	if(whoNotified.getState().state == StateType::CellChange) {
+		board[r][c] = whoNotified.getState().link;
+		if(board[r][c] != '.'){
+			turn = !turn;
+		}
 	}
 }
 

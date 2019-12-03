@@ -17,6 +17,7 @@ class GDisplay: public Observer<PInfo, PState>, public Observer<CInfo, CState>,
 	protected:
 		std::vector<std::vector<char>> board;
 		std::map<char, std::string> links;
+		std::map<std::pair<int, int>, int> firewalls;
 		std::vector<std::unique_ptr<PlayerInfo>> pi;
 		int turn;
 		virtual void displayPlayer(int player) = 0;
