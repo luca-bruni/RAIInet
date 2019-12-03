@@ -54,7 +54,6 @@ void Controller::loop(istream &in){
 				try{
 					string line;
 					getline(in, line);
-					cout << line << endl;
 					if(line.size() == 0) board.useAbility(id);
 					istringstream iss{line};
 					int row;
@@ -70,7 +69,6 @@ void Controller::loop(istream &in){
 					}
 					char link;
                                 	if(iss >> link){ // If Link name read in:
-						cout << "Hi" << endl;
                                         	board.useAbility(id, link); // Use on that Link
                                 	}
 				} catch (char const *s) {

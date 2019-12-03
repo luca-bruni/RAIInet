@@ -1,5 +1,4 @@
 #include "board.h"
-#include <iostream>
 
 using namespace std;
 
@@ -165,7 +164,6 @@ void Board::battle(Cell &origin, Cell &dest){
 			players[!turn]->download(origin.getLink()); // Other player downloads the Link
 			dest.getLink()->setEnraged(false); // Enrage ability expires
 		}
-		cout << "Enraged" << endl;
 	}
 	origin.setLink(nullptr); // One Link remains
 }
