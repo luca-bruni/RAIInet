@@ -52,7 +52,8 @@ void Controller::loop(istream &in){
                         if(!(in >> id)) { // If invalid input: not an int
                                 for(auto d : displays) 
 					d->printMsg("ability needs an ID for the card to use."); // Error msg
-                        } else { // If valid input: int
+                        	in.clear();
+			} else { // If valid input: int
                                 //STILL CHECK FOR ERRORS
 				try{
 					string line;
@@ -90,7 +91,10 @@ void Controller::loop(istream &in){
                 	break;
 		} else if(cmd == "quit") { // If command 'quit'
                         break; // Breaks out of game loop
-                }
+                } else {
+			for(auto d : displays)
+				d->printMsg("Invalid command.");
+		}
 
 		if(board.hasWon()){
 			int winner = board.whoWon();
