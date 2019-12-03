@@ -16,6 +16,7 @@ class Board {
 	std::vector<std::vector<Cell>> board; // 2-D array of Cell 
 	std::vector<std::unique_ptr<Player>> players; // Array of Players
 	std::map<char, std::shared_ptr<Link>> links; // Existing Link keys
+	bool abilityUsed = false;
 	int turn; // Determines which Player is moving now
 	public:
 		Board(); // Constructs a Board

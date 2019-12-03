@@ -120,15 +120,18 @@ void Board::move(char link, string dir){
 			origin.setLink(nullptr); // Sets the link of origin to nullptr
 		}
 		turn = !turn; // Flips turn since move was successful
+		abilityUsed = false;
 	} catch (out_of_range e) {
                 if(dir == "down" && turn == 0){ // If out_of_range at bottom and Player 1's turn
                         players[0]->download(origin.getLink()); // Player 1 downloads that Link
                         origin.setLink(nullptr); // Set that link to nullptr
 			turn = !turn; // Flips turn
+			abilityUsed = false;
                 } else if(dir == "up" && turn == 1){ // If out_of_range at top and Player 2's turn
                         players[1]->download(origin.getLink()); // Player 2 downloads that Link
                         origin.setLink(nullptr); // Sets that link to nullptr
 			turn = !turn; // Flips turn
+			abilityUsed = false;
                 } else {
                         throw "Invalid move."; // No out_of_range is happening; genuine out of boundaries
                 }
@@ -169,8 +172,10 @@ void Board::battle(Cell &origin, Cell &dest){
 
 void Board::useAbility(int id, char link){
 	try {
+		if(abilityUsed) throw "Already used ability this turn.";
 		if(links.at(link)->getType() == 'S') throw out_of_range("Not a valid link.");
 		players[turn]->useAbility(id, links.at(link).get()); // Calls useAbility on a Link
+		abilityUsed = true;
 	} catch (out_of_range e){
 		throw "That is not a valid link.";
 	}
@@ -178,12 +183,16 @@ void Board::useAbility(int id, char link){
 
 void Board::useAbility(int id, int row, int col){
 	try {
+		if(abilityUsed) throw "Already used ability this turn.";
 		players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+		abilityUsed = true;
+		
 	} catch (out_of_range e){
 		throw "That is not a valid cell.";
 	}
 }
 
 void Board::useAbility(int id) {
+	if(abilityUsed) throw "Already used ability this turn.";
 	players[turn]->useAbility(id); // Calls useAbility on self
 }
