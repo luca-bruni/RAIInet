@@ -31,12 +31,6 @@ int main(int argc, char* argv[]){
 			string s(argv[i+1]);
 			if(s[0] == '-') invalid = true;
 			else if(s.size() != 5) invalid = true;
-			for(int i = 0; i < s.size(); ++i){
-				if(s[i] != 'L' && s[i] != 'F' && s[i] != 'D' && s[i] != 'S'
-						&& s[i] != 'P'){
-					invalid = true;
-				}
-			}
 			if(!invalid && cmd == "-ability1") a1 = s;
 			else if(!invalid && cmd == "-ability2") a2 = s;
 			++i;

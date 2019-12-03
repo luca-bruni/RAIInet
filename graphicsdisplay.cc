@@ -23,6 +23,9 @@ void GraphicsDisplay::drawCard(int x, int y, int id, char type, int player){
 	else if(type == 'D') cardName = "Download";
 	else if(type == 'S') cardName = "Scan";
 	else if(type == 'P') cardName = "Polarize";
+	else if(type == 'B') cardName = "Buff";
+	else if(type == 'E') cardName = "Enrage";
+	else if(type == 'R') cardName = "Remove";
 	nameOffset -= cardName.size() * 3;
 	if(turn == player) {
 		if(pi[player]->abilityUsed[id]){

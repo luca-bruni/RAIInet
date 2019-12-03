@@ -14,8 +14,13 @@ void Controller::startGame(){
 	displays = vector<shared_ptr<GDisplay>>(); // Constructs a display pointer
 	displays.emplace_back(make_shared<TextDisplay>(l1, l2, a1, a2)); // Adds a Textdisplay object to displays
 	if(graphics) displays.emplace_back(make_shared<GraphicsDisplay>(l1, l2, a1, a2)); // Adds a Graphicsdisplay object to displays
-
-	board.init(l1, l2, a1, a2, displays); // Initializes Board
+	try {
+		board.init(l1, l2, a1, a2, displays); // Initializes Board
+	} catch(char const *s){
+		string msg(s);
+		for(auto d : displays) d->printMsg(msg);
+		return;
+	}
 	for(int i = 0; i < displays.size(); ++i) displays[i]->display(); // Calls display on each display
 	loop(cin); // Begins input loop
 }

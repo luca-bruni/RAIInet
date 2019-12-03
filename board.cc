@@ -137,16 +137,16 @@ void Board::move(char link, string dir){
 }
 
 void Board::battle(Cell &origin, Cell &dest){
-	bool oEnraged = false; // True if origin's Link is enraged; false otherwise
-	bool dEnraged = false; // True if dest's Link is enraged; false otherwise
+	// True if origin's Link is enraged; false otherwise
+	bool oEnraged = origin.getLink()->getInfo().isEnraged;
+	// True if dest's Link is enraged; false otherwise
+	bool dEnraged = dest.getLink()->getInfo().isEnraged;
 	origin.getLink()->reveal(); // Reveal origin link to all
 	dest.getLink()->reveal(); // Reveal dest link to all
-
-	if (origin.getLink()->getInfo().isEnraged) { oEnraged = true; } // If origin Link is enraged
-	if (dest.getLink()->getInfo().isEnraged) { dEnraged = true; } // If dest Link is enraged
 	
-	if (((oEnraged) && (dEnraged)) || (!((oEnraged) || (dEnraged)))) { // If both or neither Links are enraged
-		if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){ // If mover's link-strength greater-equal than other link:
+	if ((oEnraged && dEnraged) || !(oEnraged || dEnraged)) { // If both or neither Links are enraged
+		// If mover's link-strength greater-equal than other link:
+		if(origin.getLink()->getStrength() >= dest.getLink()->getStrength()){
 			players[turn]->download(dest.getLink()); // Mover downloads the lesser Link
 			dest.setLink(origin.getLink()); // Stronger Link remains at dest's location
 		} else { // If mover's link-strength is less than other link:
@@ -162,12 +162,12 @@ void Board::battle(Cell &origin, Cell &dest){
 			players[!turn]->download(origin.getLink()); // Other player downloads the Link
 			dest.getLink()->setEnraged(false); // Enrage ability expires
 		}
+		cout << "Enraged" << endl;
 	}
 	origin.setLink(nullptr); // One Link remains
 }
 
 void Board::useAbility(int id, char link){
-	cout << "Used ability" << endl;
 	try {
 		if(links.at(link)->getType() == 'S') throw out_of_range("Not a valid link.");
 		players[turn]->useAbility(id, links.at(link).get()); // Calls useAbility on a Link

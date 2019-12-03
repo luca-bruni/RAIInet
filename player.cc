@@ -1,5 +1,4 @@
 #include "player.h"
-#include <iostream>
 
 using namespace std;
 
@@ -13,6 +12,7 @@ Player::Player(string abs, int id): abilities{vector<unique_ptr<Ability>>()}, id
         else if (abs[i] == 'E') abilities.emplace_back(make_unique<Enrage>());
         else if (abs[i] == 'R') abilities.emplace_back(make_unique<Remove>());
         else if (abs[i] == 'B') abilities.emplace_back(make_unique<Buff>());
+	else throw "Incorrect card type";
     }
 }
 

@@ -57,13 +57,14 @@ void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
 void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
 	int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;
+	char oldBoard = board[r][c];
 	if(whoNotified.getState().state == StateType::Firewall){
         	firewalls[std::make_pair(r, c)] = whoNotified.getInfo().playerFirewall;
 		display();
         }
 	if(whoNotified.getState().state == StateType::CellChange) {
 		board[r][c] = whoNotified.getState().link;
-		if(board[r][c] != '.'){
+		if(oldBoard != '.' && board[r][c] == '.'){
 			turn = !turn;
 		}
 	}
