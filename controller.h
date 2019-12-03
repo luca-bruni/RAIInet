@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <memory>
+#include <sstream>
 
 class Controller {
 	const std::string initLinks = "V1V2V3V4D1D2D3D4"; // Default eight Links
@@ -16,7 +17,7 @@ class Controller {
 	std::string l1, l2; // Links of Player 1, 2
 	std::string a1, a2; // Abilities of Player 1, 2
 	bool graphics; // True if user wants graphics to be displayed; false otherwise
-	std::vector<GDisplay*> displays; // Display array
+	std::vector<std::shared_ptr<GDisplay>> displays; // Display array
 	Board board; // The Board
 	public:
 		Controller(std::string l1, std::string l2, std::string a1, 

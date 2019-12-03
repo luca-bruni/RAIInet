@@ -5,9 +5,9 @@ using namespace std;
 
 GDisplay::GDisplay(string l1, string l2, string a1, string a2){
 	links = map<char, string>();
-        pi = vector<PlayerInfo*>();
-	pi.emplace_back(new PlayerInfo());
-	pi.emplace_back(new PlayerInfo());
+        pi = vector<unique_ptr<PlayerInfo>>();
+	pi.emplace_back(make_unique<PlayerInfo>());
+	pi.emplace_back(make_unique<PlayerInfo>());
         turn = 0;
         for(size_t i = 0; i < l1.length() / 2; ++i){
                 char p1Name = 'a' + i;
@@ -35,10 +35,9 @@ GDisplay::GDisplay(string l1, string l2, string a1, string a2){
         }
 }
 
-GDisplay::~GDisplay() { for(auto p : pi) delete p; }
+GDisplay::~GDisplay() {}
 
 void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
-	cout << "Received in Player!" << endl;
 	const PState& state = whoNotified.getState();
         if(state.state == StateType::Download){
                 if(whoNotified.getInfo().player == 0){
@@ -55,7 +54,6 @@ void GDisplay::notify(Subject<PInfo, PState> &whoNotified){
 }
 
 void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
-	cout << "Received in Cell!" << endl;
 	int r = whoNotified.getInfo().row;
         int c = whoNotified.getInfo().col;
         board[r][c] = whoNotified.getState().link;
@@ -69,7 +67,6 @@ void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
 }
 
 void GDisplay::notify(Subject<LInfo, LState> &whoNotified){
-	cout << "Received in Link!" << endl;
-	for(auto p : pi) p->revealed.emplace_back(whoNotified.getInfo().link);
+	for(int i = 0; i < pi.size(); ++i) pi[i]->revealed.emplace_back(whoNotified.getInfo().link);
 }
 

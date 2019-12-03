@@ -19,7 +19,7 @@ class TextDisplay: public GDisplay {
 		~TextDisplay();
 		void display() override;
 		void displayAbilities() override;
-		void printError(std::string msg);
+		void printMsg(std::string msg);
 };
 
 #endif

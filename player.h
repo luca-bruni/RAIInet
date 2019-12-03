@@ -25,6 +25,7 @@ public:
     ~Player();
     void useAbility(int choice, Cell *cell);
     void useAbility(int choice, Link *link);
+    void useAbility(int choice);
     void download(std::shared_ptr<Link> link);
     int getVirus();
     int getData();

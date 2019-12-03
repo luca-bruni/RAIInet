@@ -1,10 +1,11 @@
 #include "board.h"
+#include <iostream>
 
 using namespace std;
 
 Board::Board() {}
 
-void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &displays){
+void Board::init(string l1, string l2, string a1, string a2, vector<shared_ptr<GDisplay>> &displays){
 	players = vector<unique_ptr<Player>>(); // Array of Player (auto-deallocs)
 	players.emplace_back(make_unique<Player>(a1, 0)); // Player 1's Ability list
 	players.emplace_back(make_unique<Player>(a2, 1)); // Player 2's Ability list
@@ -28,7 +29,7 @@ void Board::init(string l1, string l2, string a1, string a2, vector<GDisplay*> &
                 	links['W' + i] = s;
 		}
 	}
-	for(auto d : displays) setDisplay(d); // Loops through displays for existence; sets as observer
+	for(auto d : displays) setDisplay(d.get()); // Loops through displays for existence; sets as observer
 	for(int i = 0; i < boardSize; ++i){ // Loops through Board and adds server ports accordingly at game start
 		char p1 = 'a' + i;
 		char p2 = 'A' + i;
@@ -72,7 +73,11 @@ int Board::whoWon(){
 }
 
 void Board::move(char link, string dir){
-	if(links[link]->getInfo().player != turn) throw "Not your piece."; // If in-permissable move on turn
+	try {
+		if(links.at(link)->getInfo().player != turn) throw "Not your piece."; // If in-permissable move on turn
+	} catch (out_of_range e){
+		throw "Not a valid link.";
+	}
 	int row = -1;
 	int col = -1;
 	for(size_t r = 0; r < board.size(); ++r){ // Loops through rows
@@ -85,10 +90,12 @@ void Board::move(char link, string dir){
 		}
 	}
 	Cell &origin = board.at(row).at(col); // Original position of piece via Cell
-	if(dir == "up") row -= 1; // Move up
-	else if(dir == "down") row += 1; // Move down
-	else if(dir == "left") col -= 1; // Move left
-	else col += 1; // Move right
+	int speed = 1 + links[link]->getInfo().isBoosted;
+	if(dir == "up") row -= speed; // Move up
+	else if(dir == "down") row += speed; // Move down
+	else if(dir == "left") col -= speed; // Move left
+	else if(dir == "right") col += speed; // Move right
+	else throw "Not a valid direction to move in.";
 	try {
 		Cell &dest = board.at(row).at(col);
 		if(dest.getLink() != nullptr){ // If dest non-empty
@@ -115,7 +122,7 @@ void Board::move(char link, string dir){
                         origin.setLink(nullptr); // Sets that link to nullptr
 			turn = !turn; // Flips turn
                 } else {
-                        throw; // No out_of_range is happening; genuine out of boundaries
+                        throw "Invalid move."; // No out_of_range is happening; genuine out of boundaries
                 }
         }
 
@@ -142,21 +149,31 @@ void Board::battle(Cell &origin, Cell &dest){
 		if (oEnraged) { // If origin Link is enraged
 			players[turn]->download(dest.getLink());
 			dest.setLink(origin.getLink());
-			origin.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+			origin.getLink()->setEnraged(false); // Enrage ability expires
 		} else { // If dest Link is enraged
 			players[!turn]->download(origin.getLink()); // Other player downloads the Link
-			dest.getLink()->getInfo().isEnraged = false; // Enrage ability expires
+			dest.getLink()->setEnraged(false); // Enrage ability expires
 		}
 	}
 	origin.setLink(nullptr); // One Link remains
 }
 
 void Board::useAbility(int id, char link){
-	players[turn]->useAbility(id, links[link].get()); // Calls useAbility on a Link
+	cout << "Used ability" << endl;
+	try {
+		if(links.at(link)->getType() == 'S') throw out_of_range("Not a valid link.");
+		players[turn]->useAbility(id, links.at(link).get()); // Calls useAbility on a Link
+	} catch (out_of_range e){
+		throw "That is not a valid link.";
+	}
 }
 
 void Board::useAbility(int id, int row, int col){
-	players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+	try {
+		players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+	} catch (out_of_range e){
+		throw "That is not a valid cell.";
+	}
 }
 
 void Board::useAbility(int id) {

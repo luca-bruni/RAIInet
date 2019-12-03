@@ -63,4 +63,4 @@ void TextDisplay::displayAbilities(){
 	}
 }
 
-void TextDisplay::printError(string msg) { out << msg << endl; }
+void TextDisplay::printMsg(string msg) { out << msg << endl; }

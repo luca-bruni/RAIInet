@@ -12,6 +12,7 @@ class Ability {
 		Ability(): isUsed{false} {}
 		virtual void use(Cell *cell, Player &p) {}
 		virtual void use(Link *link, Player &p) {}
+		virtual void use(Player &p) {}
 };
 
 #endif

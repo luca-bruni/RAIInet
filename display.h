@@ -8,6 +8,7 @@
 #include "info.h"
 #include <vector>
 #include <map>
+#include <memory>
 
 class GDisplay: public Observer<PInfo, PState>, public Observer<CInfo, CState>, 
 						public Observer<LInfo, LState>{
@@ -16,7 +17,7 @@ class GDisplay: public Observer<PInfo, PState>, public Observer<CInfo, CState>,
 	protected:
 		std::vector<std::vector<char>> board;
 		std::map<char, std::string> links;
-		std::vector<PlayerInfo*> pi;
+		std::vector<std::unique_ptr<PlayerInfo>> pi;
 		int turn;
 		virtual void displayPlayer(int player) = 0;
 	public:
@@ -27,7 +28,7 @@ class GDisplay: public Observer<PInfo, PState>, public Observer<CInfo, CState>,
 		void notify(Subject<LInfo, LState> &whoNotified);
 		virtual void display() = 0;
 		virtual void displayAbilities() = 0;
-		virtual void printError(std::string msg) = 0;
+		virtual void printMsg(std::string msg) = 0;
 };
 
 #endif

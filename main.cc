@@ -1,6 +1,7 @@
 #include "controller.h"
 #include <string>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -59,7 +60,6 @@ int main(int argc, char* argv[]){
 		return 1;
 	}
 
-	Controller *con = new Controller(l1, l2, a1, a2, graphics);
+	unique_ptr<Controller> con = make_unique<Controller>(l1, l2, a1, a2, graphics);
 	con->startGame();
-	delete con;
 }

@@ -4,7 +4,7 @@
 Firewall::Firewall(): Ability{} {}
 
 void Firewall::use(Cell *cell, Player &p) {
-	if ((Cell->getInfo() != 'D') && (Cell->getInfo() != 'V') && (Cell->getInfo() != 'S')) {
+	if (cell->getInfo().link == '.') {
 		cell->setFirewall(p.getInfo().player);
 		isUsed = true;
 		return;

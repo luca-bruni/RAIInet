@@ -121,4 +121,4 @@ void GraphicsDisplay::display(){
 
 void GraphicsDisplay::displayAbilities() {}
 
-void GraphicsDisplay::printError(string msg) {}
+void GraphicsDisplay::printMsg(string msg) {}

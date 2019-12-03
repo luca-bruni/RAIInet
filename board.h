@@ -21,7 +21,7 @@ class Board {
 		Board(); // Constructs a Board
 		// Initializes board to game-start
 		void init(std::string l1, std::string l2, std::string a1, std::string a2,
-				std::vector<GDisplay*> &displays);
+				std::vector<std::shared_ptr<GDisplay>> &displays);
 		void setDisplay(GDisplay *d); // Allows displays to observe all necessary Subjects
 		bool hasWon(); // Checks state of Board for a winning state
 		int whoWon(); // Identifies which Player won
