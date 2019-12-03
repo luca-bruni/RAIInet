@@ -21,7 +21,7 @@ void Controller::startGame(){
 		for(auto d : displays) d->printMsg(msg);
 		return;
 	}
-	for(int i = 0; i < displays.size(); ++i) displays[i]->display(); // Calls display on each display
+	for(size_t i = 0; i < displays.size(); ++i) displays[i]->display(); // Calls display on each display
 	loop(cin); // Begins input loop
 }
 

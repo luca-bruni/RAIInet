@@ -52,7 +52,7 @@ void GraphicsDisplay::displayPlayer(int player){
 	for(int i = 0; i < pi[player]->virus; ++i){
 		drawPiece(10 + (i + 4) * cellSize / 2, iy + 25, 'V');
 	}
-	for(int i = 0; i < pi[player]->abilities.size(); ++i){
+	for(size_t i = 0; i < pi[player]->abilities.size(); ++i){
 		drawCard(10 + i * (cardXSize + 4), iy + 60, i, 
 				pi[player]->abilities[i], player);
 	}

@@ -71,6 +71,6 @@ void GDisplay::notify(Subject<CInfo, CState> &whoNotified){
 }
 
 void GDisplay::notify(Subject<LInfo, LState> &whoNotified){
-	for(int i = 0; i < pi.size(); ++i) pi[i]->revealed.emplace_back(whoNotified.getInfo().link);
+	for(size_t i = 0; i < pi.size(); ++i) pi[i]->revealed.emplace_back(whoNotified.getInfo().link);
 }
 

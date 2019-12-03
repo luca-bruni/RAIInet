@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
 			string s(argv[i+1]);
 			if(s[0] == '-') invalid = true;
 			else if(s.size() != 16) invalid = true;
-			for(int i = 0; i < s.size(); i+=2){
+			for(size_t i = 0; i < s.size(); i+=2){
 				if(s[i] != 'D' && s[i] != 'V') invalid = true;
 				else if(s[i+1] < '1' || s[i+1] > '4') invalid = true;
 			}
