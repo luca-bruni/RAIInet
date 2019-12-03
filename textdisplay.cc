@@ -12,7 +12,11 @@ TextDisplay::~TextDisplay(){}
 void TextDisplay::displayPlayer(int player) {
 	out << "Player " << (player + 1) << ":" << endl;
 	out << "Downloaded: "<< pi[player]->data << "D, "<< pi[player]->virus << "V" << endl;
-	out << "Abilities: "<< pi[player]->abilities.size() << endl;
+	int abilities = 0;
+	for (int i = 0; i < pi[player]->abilities.size(); ++i) {
+		if(!pi[player]->abilityUsed[i]) ++abilities;
+	}
+	out << "Abilities: "<< abilities << endl;
 	char linkName = (player == 0 ? 'a' : 'A');
 	for(size_t i = 0; i < links.size() / 2; ++i){
 		char newName = (linkName + i);
