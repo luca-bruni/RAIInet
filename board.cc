@@ -182,7 +182,7 @@ void Board::useAbility(int id, char link){
 void Board::useAbility(int id, int row, int col){
 	try {
 		if(abilityUsed) throw "Already used ability this turn.";
-		players[turn]->useAbility(id, &board.at(row).at(col)); // Calls useAbility on a Cell
+		players[turn]->useAbility(id, &board.at(row - 1).at(col - 1)); // Calls useAbility on a Cell
 		abilityUsed = true;
 		
 	} catch (out_of_range e){
