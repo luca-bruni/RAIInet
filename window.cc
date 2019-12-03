@@ -82,3 +82,7 @@ void Xwindow::drawString(int x, int y, string msg) {
 	XFlush(d);
 }
 
+void Xwindow::delay(int sec){
+	sleep(sec);
+}
+

@@ -24,7 +24,9 @@ public:
 
 	// Draws a string
 	void drawString(int x, int y, std::string msg);
-
+	
+	//Delay program
+	void delay(int sec);
 };
 
 #endif

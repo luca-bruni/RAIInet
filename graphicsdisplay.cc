@@ -135,4 +135,10 @@ void GraphicsDisplay::display(){
 
 void GraphicsDisplay::displayAbilities() {}
 
-void GraphicsDisplay::printMsg(string msg) {}
+void GraphicsDisplay::printMsg(string msg) {
+	win->fillRectangle(0, 389, 500, 22, Xwindow::Black);
+	win->fillRectangle(1, 390, 498, 20, Xwindow::White);
+	win->drawString(250 - msg.size() * 3, 405, msg);
+	win->delay(3);
+	display();
+}

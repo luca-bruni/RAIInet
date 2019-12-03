@@ -31,7 +31,8 @@ void Controller::loop(istream &in){
                 if(cmd == "move") { // If command is 'move'
                         char c; // Link
                         if(!(in >> c)) { // Invalid input: not a char
-                        	displays[0]->printMsg("Move needs a character respresentation for a piece to move."); // Error msg
+                        	for(auto d : displays) 
+					d->printMsg("Move needs a character respresentation for a piece to move."); // Error msg
                         } else { // If valid input: char
                                 string dir; // Direction
                                 in >> dir; // Reads in a direction
@@ -40,7 +41,8 @@ void Controller::loop(istream &in){
 					for(auto d : displays) d->display(); // Updates displays
                                 } catch (char const *s) { // Invalid dir
                                         string msg(s);
-					displays[0]->printMsg(msg); // Error msg as per display
+					for(auto d : displays) 
+						d->printMsg(msg); // Error msg as per display
                                 }
                         }
                 } else if(cmd == "abilities") { // If command is 'abilities'
@@ -48,7 +50,8 @@ void Controller::loop(istream &in){
                 } else if(cmd == "ability") { // If command is 'ability'
                         int id; // Ability ID
                         if(!(in >> id)) { // If invalid input: not an int
-                                displays[0]->printMsg("ability needs an ID for the card to use."); // Error msg
+                                for(auto d : displays) 
+					d->printMsg("ability needs an ID for the card to use."); // Error msg
                         } else { // If valid input: int
                                 //STILL CHECK FOR ERRORS
 				try{
@@ -60,7 +63,8 @@ void Controller::loop(istream &in){
                                 	if(iss >> row) {
 						int col;
 						if(!(iss >> col)) {
-							displays[0]->printMsg("Incorrect use of card.");
+							for(auto d: displays) 
+								d->printMsg("Incorrect use of card.");
 							continue;
 						}
                                         	board.useAbility(id, row, col); // If Cell-ability, use on that Cell
@@ -73,7 +77,7 @@ void Controller::loop(istream &in){
                                 	}
 				} catch (char const *s) {
 					string msg{s};
-					displays[0]->printMsg(msg);
+					for(auto d : displays) d->printMsg(msg);
 				}
                         }
                 } else if(cmd == "board") { // If command is 'board'
